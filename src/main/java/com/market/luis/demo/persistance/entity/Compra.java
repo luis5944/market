@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Entity
 @Table(name = "compras")
 public class Compra {
 
     @Id
-    @Column(name = "id_compra")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_compra")
     private Integer idCompra;
 
     @Column(name = "id_cliente")
@@ -25,18 +26,17 @@ public class Compra {
     private String estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente", updatable = false, insertable = false)
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL})
     private List<ComprasProducto> productos;
 
-    //Getters & Setters
     public Integer getIdCompra() {
         return idCompra;
     }
 
-    public void setId_compra(Integer idCompra) {
+    public void setIdCompra(Integer idCompra) {
         this.idCompra = idCompra;
     }
 
@@ -78,5 +78,21 @@ public class Compra {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ComprasProducto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ComprasProducto> productos) {
+        this.productos = productos;
     }
 }
